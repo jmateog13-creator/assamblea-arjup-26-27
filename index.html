@@ -390,9 +390,11 @@
 
         .kpis {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(6, 1fr);
             gap: 12px;
         }
+        .kpi { grid-column: span 2; }
+        .kpi:nth-child(n+4) { grid-column: span 3; }
         .kpi {
             background: #fff;
             border: 1px solid var(--line);
@@ -539,6 +541,8 @@
             .win-list { grid-template-columns: 1fr 1fr; }
             .ledger, .meals, .two-charts, .movers { grid-template-columns: 1fr; gap: 3vh; }
             .kpis { grid-template-columns: 1fr 1fr; }
+            .kpi, .kpi:nth-child(n+4) { grid-column: auto; }
+            .kpi:last-child { grid-column: span 2; }
             .verdict { border-left: none; border-top: 3px solid var(--ink); padding: 2vh 0 0; }
         }
 
@@ -912,11 +916,6 @@
                         <span class="kpi-label">Alcohol en botella</span>
                         <strong>819<small> L</small></strong>
                         <span class="kpi-delta up">+4% <em>vs 788 el 2025</em></span>
-                    </div>
-                    <div class="kpi">
-                        <span class="kpi-label">Botelles d'alcohol</span>
-                        <strong>1.019<small> u.</small></strong>
-                        <span class="kpi-delta down">−1% <em>vs 1.031 el 2025</em></span>
                     </div>
                     <div class="kpi">
                         <span class="kpi-label">Caixes d'aigua</span>
