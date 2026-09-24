@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assemblea General - Penya L'Arjup</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --paper: #f3ede2;
+            --ink: #16130f;
+            --red: #d62b1f;
+            --red-deep: #a51b12;
+            --muted: #7b7266;
+            --line: rgba(22, 19, 15, 0.14);
+        }
+
+        /* Estils Generals */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Bricolage Grotesque', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--ink);
+            color: var(--ink);
+            overflow: hidden;
+        }
+
+        /* Textura de gra sobre totes les diapositives */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.06;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        /* Contenidor de la Presentació */
+        .slideshow-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Estil de cada Diapositiva */
+        .slide {
+            display: none;
+            position: absolute;
+            inset: 0;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            text-align: left;
+            padding: 8vh 9vw 12vh;
+            box-sizing: border-box;
+        }
+
+        .slide.active { display: flex; }
+
+        .slide-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1100px;
+            width: 100%;
+        }
+
+        /* Número gegant de secció al fons */
+        .slide[data-num]::before {
+            content: attr(data-num);
+            position: absolute;
+            right: 4vw;
+            bottom: -6vh;
+            font-size: clamp(14rem, 38vw, 34rem);
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -0.06em;
+            -webkit-text-fill-color: transparent;
+            -webkit-text-stroke: 2px currentColor;
+            opacity: 0.22;
+            z-index: 1;
+        }
+
+        /* Animacions del contingut */
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-40px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes growLine {
+            from { transform: scaleX(0); }
+            to   { transform: scaleX(1); }
+        }
+
+        .slide.active .slide-content > * {
+            animation: slideIn 0.7s cubic-bezier(.2,.8,.2,1) both;
+        }
+        .slide.active .slide-content > *:nth-child(2) { animation-delay: 0.15s; }
+        .slide.active .slide-content > *:nth-child(3) { animation-delay: 0.3s; }
+        .slide.active .slide-content > *:nth-child(4) { animation-delay: 0.45s; }
+
+        .slide.active .slide-content ul > li {
+            animation: slideIn 0.55s cubic-bezier(.2,.8,.2,1) both;
+        }
+        .slide.active .slide-content ul > li:nth-child(1)  { animation-delay: 0.25s; }
+        .slide.active .slide-content ul > li:nth-child(2)  { animation-delay: 0.32s; }
+        .slide.active .slide-content ul > li:nth-child(3)  { animation-delay: 0.39s; }
+        .slide.active .slide-content ul > li:nth-child(4)  { animation-delay: 0.46s; }
+        .slide.active .slide-content ul > li:nth-child(5)  { animation-delay: 0.53s; }
+        .slide.active .slide-content ul > li:nth-child(6)  { animation-delay: 0.60s; }
+        .slide.active .slide-content ul > li:nth-child(7)  { animation-delay: 0.67s; }
+        .slide.active .slide-content ul > li:nth-child(8)  { animation-delay: 0.74s; }
+        .slide.active .slide-content ul > li:nth-child(9)  { animation-delay: 0.81s; }
+        .slide.active .slide-content ul > li:nth-child(10) { animation-delay: 0.88s; }
+        .slide.active .slide-content ul > li:nth-child(11) { animation-delay: 0.95s; }
+        .slide.active .slide-content ul > li:nth-child(12) { animation-delay: 1.02s; }
+        .slide.active .slide-content ul > li:nth-child(13) { animation-delay: 1.09s; }
+        .slide.active .slide-content ul > li:nth-child(14) { animation-delay: 1.16s; }
+
+        /* Esquema de colors */
+        .bg-paper { background-color: var(--paper); color: var(--ink); }
+        .bg-red   { background-color: var(--red); color: var(--paper); }
+        .bg-ink   { background-color: var(--ink); color: var(--paper); }
+
+        /* Estils de Text */
+        .eyebrow {
+            font-family: 'DM Mono', ui-monospace, monospace;
+            font-size: clamp(0.8rem, 1.4vw, 1rem);
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            margin: 0 0 2vh;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .eyebrow::before {
+            content: '';
+            width: 40px;
+            height: 2px;
+            background: currentColor;
+        }
+        .bg-paper .eyebrow { color: var(--red); }
+
+        h1 {
+            font-size: clamp(2.8rem, 8vw, 7rem);
+            line-height: 0.92;
+            margin: 0;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+        }
+
+        h2 {
+            font-size: clamp(2.2rem, 5.5vw, 4.5rem);
+            line-height: 1;
+            margin: 0 0 4vh;
+            font-weight: 800;
+            letter-spacing: -0.035em;
+        }
+
+        .statement {
+            font-size: clamp(2rem, 5.2vw, 4.4rem);
+            line-height: 1.02;
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            margin: 0;
+            max-width: 18ch;
+        }
+        .statement em {
+            font-style: normal;
+            color: var(--ink);
+            background: var(--paper);
+            padding: 0 0.15em;
+            box-decoration-break: clone;
+            -webkit-box-decoration-break: clone;
+        }
+
+        .sub {
+            font-size: clamp(1.1rem, 2.4vw, 1.7rem);
+            font-weight: 400;
+            margin: 3vh 0 0;
+            opacity: 0.85;
+        }
+
+        .rule {
+            height: 6px;
+            width: min(260px, 40vw);
+            background: currentColor;
+            margin-top: 4vh;
+            transform-origin: left;
+        }
+        .slide.active .rule { animation: growLine 0.8s 0.4s cubic-bezier(.2,.8,.2,1) both; }
+        .bg-paper .rule { background: var(--red); }
+
+        /* Llistes numerades tipus agenda */
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            counter-reset: item;
+        }
+
+        .agenda li {
+            counter-increment: item;
+            display: flex;
+            align-items: baseline;
+            gap: 24px;
+            font-size: clamp(1.3rem, 3vw, 2.2rem);
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            padding: 1.6vh 0;
+            border-bottom: 1px solid var(--line);
+        }
+        .agenda li:first-child { border-top: 1px solid var(--line); }
+        .agenda li::before {
+            content: counter(item, decimal-leading-zero);
+            font-family: 'DM Mono', ui-monospace, monospace;
+            font-size: 0.5em;
+            font-weight: 500;
+            color: var(--red);
+            min-width: 2.4em;
+        }
+
+        /* Graella d'actes */
+        #llista-actes {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 10px;
+        }
+        #llista-actes li {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-left: 5px solid var(--red);
+            padding: 1.4vh 16px;
+            font-size: clamp(1rem, 1.8vw, 1.3rem);
+            font-weight: 600;
+        }
+
+        /* Gràfiques i xifres */
+        :root { --y25: #2f6fd0; --y26: var(--red); }
+        .slide-content.wide { max-width: 1200px; }
+
+        .ledger {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4vw;
+        }
+        .ledger h4 {
+            margin: 0 0 1.5vh;
+            font-size: clamp(1.1rem, 2vw, 1.5rem);
+            font-weight: 800;
+            padding-bottom: 1vh;
+            border-bottom: 3px solid var(--ink);
+        }
+        .ledger-row { padding: 1.4vh 0; border-bottom: 1px solid var(--line); }
+        .ledger-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            font-size: clamp(1.05rem, 2vw, 1.5rem);
+            font-weight: 600;
+        }
+        .ledger-top strong { font-family: 'DM Mono', ui-monospace, monospace; font-weight: 500; }
+        .neg .ledger-top strong { color: var(--red-deep); }
+        .ledger-row small {
+            display: block;
+            color: var(--muted);
+            font-size: clamp(0.78rem, 1.2vw, 0.95rem);
+            margin-top: 0.6vh;
+        }
+        .ledger-bar { height: 8px; margin-top: 1vh; }
+        .ledger-bar i, .bar i {
+            display: block;
+            height: 100%;
+            width: var(--w, 0%);
+            border-radius: 0 4px 4px 0;
+            transform-origin: left;
+        }
+        .ledger-bar i { background: var(--ink); }
+        .neg .ledger-bar i { background: var(--red); }
+
+        .legend {
+            display: flex;
+            gap: 22px;
+            margin-bottom: 2.5vh;
+            font-family: 'DM Mono', ui-monospace, monospace;
+            font-size: 14px;
+        }
+        .k25, .k26 { display: inline-flex; align-items: center; gap: 8px; }
+        .k25::before, .k26::before {
+            content: '';
+            width: 14px;
+            height: 14px;
+            border-radius: 3px;
+            background: var(--y25);
+        }
+        .k26::before { background: var(--y26); }
+
+        .compare { display: flex; flex-direction: column; gap: 3vh; }
+        .cmp-row {
+            display: grid;
+            grid-template-columns: minmax(90px, 160px) 1fr;
+            align-items: center;
+            gap: 20px;
+        }
+        .cmp-label { font-size: clamp(1.05rem, 2vw, 1.5rem); font-weight: 700; }
+        .cmp-bars { display: flex; flex-direction: column; gap: 2px; }
+        .bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            height: clamp(26px, 4.4vh, 40px);
+            cursor: default;
+        }
+        .bar i { flex: 0 0 auto; }
+        .bar.y25 i { background: var(--y25); }
+        .bar.y26 i { background: var(--y26); }
+        .bar b {
+            font-family: 'DM Mono', ui-monospace, monospace;
+            font-weight: 500;
+            font-size: clamp(0.85rem, 1.5vw, 1.1rem);
+            white-space: nowrap;
+        }
+        .bar.pending i { width: 4px; background: var(--line); }
+        .bar.pending b { color: var(--muted); font-style: italic; }
+        .compare .bar:hover i { filter: brightness(1.12); }
+
+        .slide.active .ledger-bar i,
+        .slide.active .bar i { animation: growLine 0.9s 0.35s cubic-bezier(.2,.8,.2,1) both; }
+
+        .chart-note {
+            margin: 4vh 0 0;
+            max-width: 80ch;
+            color: var(--muted);
+            font-size: clamp(0.78rem, 1.2vw, 0.95rem);
+            line-height: 1.5;
+        }
+
+        .meals {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr;
+            gap: 5vw;
+            align-items: center;
+        }
+        .verdict { border-left: 3px solid var(--ink); padding-left: 3vw; }
+        .verdict-label {
+            margin: 0 0 2vh;
+            font-family: 'DM Mono', ui-monospace, monospace;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+        }
+        .verdict-big {
+            display: block;
+            font-size: clamp(2.6rem, 6vw, 5rem);
+            font-weight: 800;
+            letter-spacing: -0.04em;
+        }
+        .bar.ink i { background: var(--ink); }
+
+        .total-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            max-width: 720px;
+            margin-top: 4vh;
+            padding-top: 2vh;
+            border-top: 4px solid var(--ink);
+            font-size: clamp(1.2rem, 2.4vw, 1.8rem);
+            font-weight: 800;
+        }
+        .total-line strong { font-size: 1.4em; letter-spacing: -0.03em; }
+
+        .hero-kpi {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 10px 24px;
+            margin-bottom: 4vh;
+        }
+        .hero-kpi strong {
+            font-size: clamp(3rem, 8vw, 6.5rem);
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            line-height: 0.9;
+        }
+        .hero-kpi span { font-size: clamp(1rem, 1.9vw, 1.4rem); color: var(--muted); max-width: 30ch; }
+        .hero-kpi b { color: var(--ink); }
+
+        .kpis {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+        .kpi {
+            background: #fff;
+            border: 1px solid var(--line);
+            padding: 2vh 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .kpi-label { font-size: clamp(0.8rem, 1.2vw, 0.95rem); color: var(--muted); font-weight: 600; }
+        .kpi strong { font-size: clamp(1.6rem, 3.2vw, 2.6rem); font-weight: 800; letter-spacing: -0.03em; }
+        .kpi strong small { font-size: 0.5em; font-weight: 600; color: var(--muted); }
+        .kpi-delta { font-family: 'DM Mono', ui-monospace, monospace; font-size: 13px; font-weight: 500; }
+        .kpi-delta em { font-style: normal; color: var(--muted); font-weight: 400; }
+        .kpi-delta.up { color: #1d7a3e; }
+        .kpi-delta.down { color: var(--red-deep); }
+
+        .two-charts {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5vw;
+        }
+        .chart-title {
+            margin: 0 0 2vh;
+            font-size: clamp(1rem, 1.7vw, 1.3rem);
+            font-weight: 800;
+            padding-bottom: 1vh;
+            border-bottom: 3px solid var(--ink);
+        }
+        .compare.compact { gap: 1.4vh; }
+        .compare.compact .cmp-row { grid-template-columns: minmax(80px, 120px) 1fr; gap: 12px; }
+        .compare.compact .cmp-label { font-size: clamp(0.85rem, 1.4vw, 1.05rem); }
+        .compare.compact .bar { height: clamp(14px, 2.2vh, 22px); }
+        .compare.compact .bar b { font-size: clamp(0.7rem, 1.1vw, 0.85rem); }
+
+        .movers {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5vw;
+        }
+        .mover-list li {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 2px 16px;
+            padding: 1.6vh 0;
+            border-bottom: 1px solid var(--line);
+        }
+        .mover-list span { font-size: clamp(1rem, 1.9vw, 1.4rem); font-weight: 700; }
+        .mover-list em {
+            grid-row: 2;
+            font-style: normal;
+            font-family: 'DM Mono', ui-monospace, monospace;
+            font-size: 13px;
+            color: var(--muted);
+        }
+        .mover-list strong {
+            grid-row: 1 / span 2;
+            grid-column: 2;
+            align-self: center;
+            font-family: 'DM Mono', ui-monospace, monospace;
+            font-size: clamp(0.95rem, 1.6vw, 1.2rem);
+            font-weight: 500;
+            text-align: right;
+        }
+        .mover-list strong small { font-size: 0.75em; }
+        .mover-list.up strong { color: #1d7a3e; }
+        .mover-list.down strong { color: var(--red-deep); }
+
+        .win-grid {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 5vw;
+            align-items: center;
+            margin-top: 6vh;
+            padding-top: 4vh;
+            border-top: 1px solid rgba(243, 237, 226, 0.2);
+        }
+        .win-main { display: flex; align-items: baseline; gap: 18px; }
+        .win-main strong {
+            font-size: clamp(4rem, 11vw, 9rem);
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            line-height: 0.85;
+            color: var(--red);
+        }
+        .win-main span {
+            font-family: 'DM Mono', ui-monospace, monospace;
+            font-size: clamp(0.85rem, 1.3vw, 1rem);
+            opacity: 0.8;
+            line-height: 1.5;
+        }
+        .win-list {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+        .win-list div {
+            border-left: 3px solid var(--red);
+            padding: 0.4vh 0 0.4vh 14px;
+            display: flex;
+            flex-direction: column;
+        }
+        .win-list b { font-size: clamp(1.4rem, 2.6vw, 2.2rem); font-weight: 800; letter-spacing: -0.03em; }
+        .win-list span { font-size: clamp(0.8rem, 1.2vw, 0.95rem); opacity: 0.75; }
+
+        .ledger.compact h4 { margin-bottom: 0.6vh; }
+        .ledger.compact .ledger-row { padding: 0.9vh 0; }
+        .ledger.compact .ledger-top { font-size: clamp(0.95rem, 1.6vw, 1.2rem); }
+        .ledger.compact .ledger-bar { height: 6px; margin-top: 0.6vh; }
+        .ledger.compact small { margin-top: 0.3vh; }
+
+        .result {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 2vh 4vw;
+            margin-top: 3vh;
+            padding: 2.2vh 24px;
+            background: var(--ink);
+            color: var(--paper);
+        }
+        .result-parts {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6vh;
+            font-family: 'DM Mono', ui-monospace, monospace;
+            font-size: clamp(0.78rem, 1.1vw, 0.9rem);
+            opacity: 0.85;
+        }
+        .result-parts b { font-weight: 500; }
+        .result-main { text-align: right; display: flex; flex-direction: column; }
+        .result-main span {
+            font-family: 'DM Mono', ui-monospace, monospace;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--red);
+        }
+        .result-main strong { font-size: clamp(2rem, 4.4vw, 3.6rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1.05; }
+        .result-main small { font-size: clamp(0.78rem, 1.1vw, 0.9rem); opacity: 0.75; }
+
+        @media (max-width: 800px) {
+            .win-grid { grid-template-columns: 1fr; }
+            .win-list { grid-template-columns: 1fr 1fr; }
+            .ledger, .meals, .two-charts, .movers { grid-template-columns: 1fr; gap: 3vh; }
+            .kpis { grid-template-columns: 1fr 1fr; }
+            .verdict { border-left: none; border-top: 3px solid var(--ink); padding: 2vh 0 0; }
+        }
+
+        /* Barra inferior: peu, punts i comptador */
+        .bottom-bar {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 64px;
+            padding: 0 4vw;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            z-index: 100;
+            font-family: 'DM Mono', ui-monospace, monospace;
+            font-size: 12px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--bar-color, var(--muted));
+            transition: color 0.3s;
+        }
+        body.on-dark { --bar-color: rgba(243, 237, 226, 0.75); }
+
+        .dots {
+            display: flex;
+            gap: 6px;
+            flex: 1;
+            justify-content: center;
+            max-width: 520px;
+        }
+        .dots button {
+            flex: 1;
+            height: 4px;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            background: currentColor;
+            opacity: 0.25;
+            border-radius: 2px;
+            transition: opacity 0.3s;
+        }
+        .dots button.done { opacity: 0.6; }
+        .dots button.current { opacity: 1; background: var(--red); }
+        body.on-red .dots button.current { background: var(--paper); }
+
+        .nav {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .nav button {
+            width: 38px;
+            height: 38px;
+            border-radius: 0;
+            border: 1.5px solid currentColor;
+            background: transparent;
+            color: inherit;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .nav button:hover { background: var(--red); border-color: var(--red); color: var(--paper); }
+        body.on-red .nav button:hover { background: var(--paper); border-color: var(--paper); color: var(--red); }
+
+        .slide-logo {
+            position: fixed;
+            top: 28px;
+            right: 4vw;
+            height: 56px;
+            width: auto;
+            z-index: 200;
+        }
+
+        @media (max-width: 800px) and (min-width: 561px) {
+            .ledger.compact, .movers, .two-charts { grid-template-columns: 1fr 1fr; gap: 4vw; }
+            .ledger.compact small { display: none; }
+        }
+
+        @media (max-width: 640px) {
+            .slide { padding: 10vh 24px 14vh; }
+            .footer { display: none; }
+            .dots { max-width: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- El logo es mostrarà si existeix un arxiu "logo.png" a la mateixa carpeta -->
+    <img src="logo.png" alt="Logo Penya L'Arjup" class="slide-logo" onerror="this.style.display='none'">
+
+    <div class="slideshow-container">
+
+        <!-- Diapositiva 1: Títol -->
+        <div class="slide bg-red active">
+            <div class="slide-content">
+                <p class="eyebrow">Penya L'Arjup · Temporada 26/27</p>
+                <h1>Assemblea<br>General</h1>
+                <p class="sub">Divendres 25 de setembre de 2026</p>
+                <div class="rule"></div>
+            </div>
+        </div>
+
+        <!-- Diapositiva 2: Ordre del Dia -->
+        <div class="slide bg-paper">
+            <div class="slide-content">
+                <p class="eyebrow">Ordre del dia</p>
+                <ul class="agenda">
+                    <li>Actes Durant Tot l'Any i Recap de Festes</li>
+                    <li>Ingressos i Despeses</li>
+                    <li>Consum de Begudes</li>
+                    <li>Formació Directiva 2026/27</li>
+                    <li>Repartició de Loteria</li>
+                    <li>Precs i Preguntes</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Diapositiva 3: Després de l'assemblea -->
+        <div class="slide bg-ink">
+            <div class="slide-content">
+                <p class="eyebrow">I després de l'assemblea...</p>
+                <h1>Sopar<br><span style="color: var(--red);">&amp; Caddie</span></h1>
+            </div>
+        </div>
+
+        <!-- Diapositiva 4: Títol Actes -->
+        <div class="slide bg-red" data-num="01">
+            <div class="slide-content">
+                <p class="eyebrow">Punt 01</p>
+                <h1>Actes Durant<br>Tot l'Any</h1>
+                <p class="sub">La qüestió és no parar!</p>
+            </div>
+        </div>
+
+        <!-- Diapositiva 5: Llista d'Actes -->
+        <div class="slide bg-paper">
+            <div class="slide-content">
+                <p class="eyebrow">Tot el que hem fet</p>
+                <ul id="llista-actes">
+                    <li>Assemblea</li>
+                    <li>Caminata Solidària</li>
+                    <li>Autos Lokos</li>
+                    <li>Sopar de Nadal</li>
+                    <li>Volta a Peu</li>
+                    <li>Sant Antoni Sitral</li>
+                    <li>Pergamí Dama</li>
+                    <li>Sopar Dama</li>
+                    <li>Ruta Germanor Falles</li>
+                    <li>Presentació Repres</li>
+                    <li>Paelles Penya</li>
+                    <li>Paelles Coordi</li>
+                    <li>Sant Gregori</li>
+                    <li>Festes</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Diapositiva 6: Recap de Festes -->
+        <div class="slide bg-ink">
+            <div class="slide-content">
+                <p class="eyebrow" style="color: var(--red);">Setmana de festes</p>
+                <h1>Recap de<br>Festes</h1>
+                <p class="sub">Per part del <span style="color: var(--red); font-weight: 600;">President</span></p>
+                <div class="rule"></div>
+            </div>
+        </div>
+
+        <!-- Diapositiva 7: Ingressos i Despeses (títol) -->
+        <div class="slide bg-paper" data-num="02">
+            <div class="slide-content">
+                <p class="eyebrow">Punt 02</p>
+                <h1>Ingressos<br>i Despeses</h1>
+                <p class="sub">Els comptes de l'any 2026</p>
+                <div class="rule"></div>
+            </div>
+        </div>
+
+        <!-- Diapositiva 8: Grans números 2026 -->
+        <div class="slide bg-paper">
+            <div class="slide-content wide">
+                <p class="eyebrow">Els grans números · 2026</p>
+                <div class="ledger">
+                    <div class="ledger-col">
+                        <h4>Ingressos</h4>
+                        <div class="ledger-row" data-v="41635">
+                            <div class="ledger-top"><span>Quotes</span><strong>41.635,00 €</strong></div>
+                            <div class="ledger-bar"><i></i></div>
+                            <small>745 quotes pagades · 780 socis (comptant familiars, xiquets…)</small>
+                        </div>
+                        <div class="ledger-row" data-v="19895.30">
+                            <div class="ledger-top"><span>Transfer polseres</span><strong>19.895,30 €</strong></div>
+                            <div class="ledger-bar"><i></i></div>
+                            <small>Despeses de la transfer 1.350,58 € → <b>net 18.544,72 €</b></small>
+                        </div>
+                    </div>
+                    <div class="ledger-col">
+                        <h4>Despeses</h4>
+                        <div class="ledger-row neg" data-v="9346.57">
+                            <div class="ledger-top"><span>Material</span><strong>9.346,57 €</strong></div>
+                            <div class="ledger-bar"><i></i></div>
+                            <small>Festes i tot l'any, inclosos els 4.000 gots</small>
+                        </div>
+                        <div class="ledger-row neg" data-v="2569.17">
+                            <div class="ledger-top"><span>Coordi</span><strong>2.569,17 €</strong></div>
+                            <div class="ledger-bar"><i></i></div>
+                            <small>Cadires i taules, seguretat, entitats, arquitecte…</small>
+                        </div>
+                        <div class="ledger-row neg" data-v="1920.38">
+                            <div class="ledger-top"><span>Dietes</span><strong>1.920,38 €</strong></div>
+                            <div class="ledger-bar"><i></i></div>
+                            <small>Tot l'any (la major part, de festes)</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Diapositiva 9: Barra 2026 -->
+        <div class="slide bg-paper">
+            <div class="slide-content wide">
+                <p class="eyebrow">Barra de festes · 2026</p>
+                <div class="compare single" data-max="20000">
+                    <div class="cmp-row">
+                        <span class="cmp-label">Polseres</span>
+                        <div class="cmp-bars"><div class="bar y26" data-v="19895.30"><i></i><b>19.895,30 €</b></div></div>
+                    </div>
+                    <div class="cmp-row">
+                        <span class="cmp-label">TPV</span>
+                        <div class="cmp-bars"><div class="bar y26" data-v="17737.50"><i></i><b>17.737,50 €</b></div></div>
+                    </div>
+                    <div class="cmp-row">
+                        <span class="cmp-label">Metàl·lic</span>
+                        <div class="cmp-bars"><div class="bar y26" data-v="11605.70"><i></i><b>11.605,70 €</b></div></div>
+                    </div>
+                </div>
+                <div class="total-line"><span>Total barra</span><strong>49.238,50 €</strong></div>
+                <p class="chart-note">Polseres = ingrés brut de la transfer de polseres.</p>
+            </div>
+        </div>
+
+        <!-- Diapositiva 10: Menjars 2026 -->
+        <div class="slide bg-paper">
+            <div class="slide-content wide">
+                <p class="eyebrow">Menjars de festes · 2026</p>
+                <div class="meals">
+                    <div class="compare single" data-max="4200">
+                        <div class="cmp-row">
+                            <span class="cmp-label">Ingressos</span>
+                            <div class="cmp-bars"><div class="bar ink" data-v="4129.00"><i></i><b>4.129,00 €</b></div></div>
+                        </div>
+                        <div class="cmp-row">
+                            <span class="cmp-label">Despeses</span>
+                            <div class="cmp-bars"><div class="bar y26" data-v="4016.77"><i></i><b>4.016,77 €</b></div></div>
+                        </div>
+                    </div>
+                    <div class="verdict">
+                        <p class="verdict-label">Benefici menjars</p>
+                        <strong class="verdict-big">+112,23 €</strong>
+                    </div>
+                </div>
+                <p class="chart-note">Inclou el mercat extra (511,40 €) i el sopar d'entitats; no compta la sangria de la cridà ni les entrades de la directiva, igual que al full de comptes.</p>
+            </div>
+        </div>
+
+        <!-- Diapositiva 11: Resum de l'any -->
+        <div class="slide bg-paper">
+            <div class="slide-content wide">
+                <p class="eyebrow">Resum de l'any · 2026</p>
+                <div class="ledger compact">
+                    <div class="ledger-col">
+                        <h4>El que hem ingressat</h4>
+                        <div class="ledger-row" data-v="49238.5">
+                            <div class="ledger-top"><span>Barra de festes</span><strong>49.238,50 €</strong></div>
+                            <div class="ledger-bar"><i></i></div>
+                            <small>Polseres, TPV i metàl·lic</small>
+                        </div>
+                        <div class="ledger-row" data-v="41635">
+                            <div class="ledger-top"><span>Quotes</span><strong>41.635,00 €</strong></div>
+                            <div class="ledger-bar"><i></i></div>
+                            <small>745 quotes pagades</small>
+                        </div>
+                        <div class="ledger-row" data-v="4129">
+                            <div class="ledger-top"><span>Menjars de festes</span><strong>4.129,00 €</strong></div>
+                            <div class="ledger-bar"><i></i></div>
+                        </div>
+                        <div class="ledger-row" data-v="2642.61">
+                            <div class="ledger-top"><span>Festes fora de barra</span><strong>2.642,61 €</strong></div>
+                            <div class="ledger-bar"><i></i></div>
+                            <small>Veterans, tardeos…</small>
+                        </div>
+                    </div>
+                    <div class="ledger-col">
+                        <h4>El que hem gastat</h4>
+                        <div class="ledger-row neg" data-v="30017.18">
+                            <div class="ledger-top"><span>Beguda</span><strong>30.017,18 €</strong></div>
+                            <div class="ledger-bar"><i></i></div>
+                            <small>Comanda d'Ambar i altres</small>
+                        </div>
+                        <div class="ledger-row neg" data-v="12904.68">
+                            <div class="ledger-top"><span>Marxandatge</span><strong>12.904,68 €</strong></div>
+                            <div class="ledger-bar"><i></i></div>
+                            <small>Lanyards, bossa i tovallola</small>
+                        </div>
+                        <div class="ledger-row neg" data-v="9346.57">
+                            <div class="ledger-top"><span>Material</span><strong>9.346,57 €</strong></div>
+                            <div class="ledger-bar"><i></i></div>
+                            <small>Inclou els 4.000 gots</small>
+                        </div>
+                        <div class="ledger-row neg" data-v="2569.17">
+                            <div class="ledger-top"><span>Coordi</span><strong>2.569,17 €</strong></div>
+                            <div class="ledger-bar"><i></i></div>
+                        </div>
+                        <div class="ledger-row neg" data-v="2178.59">
+                            <div class="ledger-top"><span>Polseres</span><strong>2.178,59 €</strong></div>
+                            <div class="ledger-bar"><i></i></div>
+                        </div>
+                        <div class="ledger-row neg" data-v="1920.38">
+                            <div class="ledger-top"><span>Dietes</span><strong>1.920,38 €</strong></div>
+                            <div class="ledger-bar"><i></i></div>
+                        </div>
+                        <div class="ledger-row neg" data-v="521.79">
+                            <div class="ledger-top"><span>Gel</span><strong>521,79 €</strong></div>
+                            <div class="ledger-bar"><i></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="result">
+                    <div class="result-parts">
+                        <span>Banc <b>38.367,95 € → 64.988,46 €</b></span>
+                        <span>Efectiu <b>209,48 € → 1.236,02 €</b></span>
+                    </div>
+                    <div class="result-main">
+                        <span>Resultat de l'any</span>
+                        <strong>+27.647,05 €</strong>
+                        <small>Falten per pagar les grues (~1.800 €) → queden uns 25.847 €</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Diapositiva 12: Títol Consum -->
+        <div class="slide bg-red" data-num="03">
+            <div class="slide-content">
+                <p class="eyebrow">Punt 03</p>
+                <h1>Consum de<br>Begudes</h1>
+                <p class="sub">Festes 2025 vs Festes 2026</p>
+            </div>
+        </div>
+
+        <!-- Diapositiva 13: Consum xifres clau -->
+        <div class="slide bg-paper">
+            <div class="slide-content wide">
+                <p class="eyebrow">Consum de begudes · xifres clau</p>
+                <div class="hero-kpi">
+                    <strong>6.653 L</strong>
+                    <span>en total a festes 2026 · <b>+21%</b> respecte als 5.495 L del 2025</span>
+                </div>
+                <div class="kpis">
+                    <div class="kpi">
+                        <span class="kpi-label">Refrescos, aigua i energètiques</span>
+                        <strong>4.399<small> L</small></strong>
+                        <span class="kpi-delta up">+26% <em>vs 3.499 el 2025</em></span>
+                    </div>
+                    <div class="kpi">
+                        <span class="kpi-label">Cervesa (barril + llaunes)</span>
+                        <strong>1.435<small> L</small></strong>
+                        <span class="kpi-delta up">+19% <em>vs 1.208 el 2025</em></span>
+                    </div>
+                    <div class="kpi">
+                        <span class="kpi-label">Alcohol en botella</span>
+                        <strong>819<small> L</small></strong>
+                        <span class="kpi-delta up">+4% <em>vs 788 el 2025</em></span>
+                    </div>
+                    <div class="kpi">
+                        <span class="kpi-label">Botelles d'alcohol</span>
+                        <strong>1.019<small> u.</small></strong>
+                        <span class="kpi-delta down">−1% <em>vs 1.031 el 2025</em></span>
+                    </div>
+                    <div class="kpi">
+                        <span class="kpi-label">Caixes d'aigua</span>
+                        <strong>115<small> u.</small></strong>
+                        <span class="kpi-delta up">+25% <em>vs 92 el 2025</em></span>
+                    </div>
+                    <div class="kpi">
+                        <span class="kpi-label">Caixes d'energètica (24 ll.)</span>
+                        <strong>126<small> u.</small></strong>
+                        <span class="kpi-delta up">+56% <em>vs 81 el 2025</em></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Diapositiva 14: Consum per categoria -->
+        <div class="slide bg-paper">
+            <div class="slide-content wide">
+                <p class="eyebrow">Consum per categoria · litres</p>
+                <div class="legend"><span class="k25">2025</span><span class="k26">2026</span></div>
+                <div class="two-charts">
+                    <div>
+                        <h4 class="chart-title">Sense alcohol i cervesa</h4>
+                        <div class="compare compact" data-max="2500">
+                            <div class="cmp-row">
+                                <span class="cmp-label">Refrescos</span>
+                                <div class="cmp-bars">
+                                    <div class="bar y25" data-v="2009.4"><i></i><b>2.009 L</b></div>
+                                    <div class="bar y26" data-v="2378.4"><i></i><b>2.378 L</b></div>
+                                </div>
+                            </div>
+                            <div class="cmp-row">
+                                <span class="cmp-label">Aigua</span>
+                                <div class="cmp-bars">
+                                    <div class="bar y25" data-v="1003.95"><i></i><b>1.004 L</b></div>
+                                    <div class="bar y26" data-v="1264.5"><i></i><b>1.264 L</b></div>
+                                </div>
+                            </div>
+                            <div class="cmp-row">
+                                <span class="cmp-label">Energètica</span>
+                                <div class="cmp-bars">
+                                    <div class="bar y25" data-v="486"><i></i><b>486 L</b></div>
+                                    <div class="bar y26" data-v="756"><i></i><b>756 L</b></div>
+                                </div>
+                            </div>
+                            <div class="cmp-row">
+                                <span class="cmp-label">Cervesa</span>
+                                <div class="cmp-bars">
+                                    <div class="bar y25" data-v="1207.92"><i></i><b>1.208 L</b></div>
+                                    <div class="bar y26" data-v="1435.44"><i></i><b>1.435 L</b></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="chart-title">Alcohol en botella</h4>
+                        <div class="compare compact" data-max="250">
+                            <div class="cmp-row">
+                                <span class="cmp-label">Ginebra</span>
+                                <div class="cmp-bars">
+                                    <div class="bar y25" data-v="146.3"><i></i><b>146 L</b></div>
+                                    <div class="bar y26" data-v="175.1"><i></i><b>175 L</b></div>
+                                </div>
+                            </div>
+                            <div class="cmp-row">
+                                <span class="cmp-label">Vodka</span>
+                                <div class="cmp-bars">
+                                    <div class="bar y25" data-v="123"><i></i><b>123 L</b></div>
+                                    <div class="bar y26" data-v="128.8"><i></i><b>129 L</b></div>
+                                </div>
+                            </div>
+                            <div class="cmp-row">
+                                <span class="cmp-label">Rom</span>
+                                <div class="cmp-bars">
+                                    <div class="bar y25" data-v="205.1"><i></i><b>205 L</b></div>
+                                    <div class="bar y26" data-v="192.9"><i></i><b>193 L</b></div>
+                                </div>
+                            </div>
+                            <div class="cmp-row">
+                                <span class="cmp-label">Whisky</span>
+                                <div class="cmp-bars">
+                                    <div class="bar y25" data-v="68.6"><i></i><b>69 L</b></div>
+                                    <div class="bar y26" data-v="83.7"><i></i><b>84 L</b></div>
+                                </div>
+                            </div>
+                            <div class="cmp-row">
+                                <span class="cmp-label">Tequila</span>
+                                <div class="cmp-bars">
+                                    <div class="bar y25" data-v="4.9"><i></i><b>5 L</b></div>
+                                    <div class="bar y26" data-v="1.4"><i></i><b>1 L</b></div>
+                                </div>
+                            </div>
+                            <div class="cmp-row">
+                                <span class="cmp-label">Licors i xupitos</span>
+                                <div class="cmp-bars">
+                                    <div class="bar y25" data-v="239.8"><i></i><b>240 L</b></div>
+                                    <div class="bar y26" data-v="236.7"><i></i><b>237 L</b></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="chart-note">Cada gràfica té la seua escala. Comparem en litres perquè alguns formats han canviat (botelles de 0,7 L a 1 L, barrils de 50 L a 30 L).</p>
+            </div>
+        </div>
+
+        <!-- Diapositiva 15: Consum qui puja i qui baixa -->
+        <div class="slide bg-paper">
+            <div class="slide-content wide">
+                <p class="eyebrow">Qui puja i qui baixa · litres</p>
+                <div class="movers">
+                    <div>
+                        <h4 class="chart-title">▲ Més consum</h4>
+                        <ul class="mover-list up">
+                        <li><span>Beguda energètica</span><em>486 → 756 L</em><strong>+270 L <small>(+56%)</small></strong></li>
+                        <li><span>Aigua 33 cl</span><em>797 → 1.039,5 L</em><strong>+242,5 L <small>(+30%)</small></strong></li>
+                        <li><span>Cervesa de barril</span><em>1.200 → 1.380 L</em><strong>+180 L <small>(+15%)</small></strong></li>
+                        <li><span>CocaCola</span><em>648 → 792 L</em><strong>+144 L <small>(+22%)</small></strong></li>
+                        <li><span>Fanta Llima</span><em>612 → 684 L</em><strong>+72 L <small>(+12%)</small></strong></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="chart-title">▼ Menys consum</h4>
+                        <ul class="mover-list down">
+                        <li><span>Jägermeister</span><em>132 → 108 L</em><strong>−24 L <small>(−18%)</small></strong></li>
+                        <li><span>Rom Brugal</span><em>79,1 → 62 L</em><strong>−17,1 L <small>(−22%)</small></strong></li>
+                        <li><span>Aquarius Taronja</span><em>64,4 → 47,5 L</em><strong>−16,9 L <small>(−26%)</small></strong></li>
+                        <li><span>Licor / tequila de maduixa</span><em>35 → 28,7 L</em><strong>−6,3 L <small>(−18%)</small></strong></li>
+                        <li><span>Tequila José Cuervo</span><em>4,9 → 1,4 L</em><strong>−3,5 L <small>(−71%)</small></strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Diapositiva 16: Consum conclusió -->
+        <div class="slide bg-ink">
+            <div class="slide-content wide">
+                <p class="eyebrow" style="color: var(--red);">Conclusió · consum de begudes</p>
+                <p class="statement" style="max-width: 22ch;">Hem pagat poc més, però hem tingut <span style="color: var(--red);">molta més beguda</span></p>
+                <div class="win-grid">
+                    <div class="win-main">
+                        <strong>+21%</strong>
+                        <span>de beguda<br>5.495 L → 6.653 L</span>
+                    </div>
+                    <div class="win-list">
+                        <div><b>+1.158 L</b><span>més en total</span></div>
+                        <div><b>+56%</b><span>energètica</span></div>
+                        <div><b>+26%</b><span>aigua</span></div>
+                        <div><b>+19%</b><span>cervesa</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Diapositiva 17: Formació Directiva -->
+        <div class="slide bg-ink" data-num="04">
+            <div class="slide-content">
+                <p class="eyebrow">Punt 04</p>
+                <h1>Formació<br>Directiva <span style="color: var(--red);">26/27</span></h1>
+            </div>
+        </div>
+
+        <!-- Diapositiva 18: Introducció Agraïments -->
+        <div class="slide bg-red">
+            <div class="slide-content">
+                <h1>Però<br>abans...</h1>
+            </div>
+        </div>
+
+        <!-- Diapositiva 19: Agraïment Directiva Sortint -->
+        <div class="slide bg-red">
+            <div class="slide-content">
+                <p class="statement">Moltes gràcies a la gent que ha estat fins avui <em>a la directiva</em></p>
+            </div>
+        </div>
+
+        <!-- Diapositiva 20: Votació -->
+        <div class="slide bg-paper">
+            <div class="slide-content">
+                <p class="eyebrow">Votació</p>
+                <p class="statement">I ara realitzarem la votació per l'entrada dels <span style="color: var(--red);">nous integrants</span> de la directiva</p>
+                <div class="rule"></div>
+            </div>
+        </div>
+
+        <!-- Diapositiva 21: Benvinguda -->
+        <div class="slide bg-ink">
+            <div class="slide-content">
+                <p class="eyebrow" style="color: var(--red);">Benvinguts!</p>
+                <p class="statement">Aixina que benvinguts als nous integrants de la directiva <span style="color: var(--red);">26/27</span></p>
+            </div>
+        </div>
+
+        <!-- Diapositiva 22: Loteria -->
+        <div class="slide bg-paper" data-num="05">
+            <div class="slide-content">
+                <p class="eyebrow">Punt 05</p>
+                <h2>Repartició de Loteria</h2>
+                <p class="sub">Este any ens toca sí o sí!</p>
+                <div class="rule"></div>
+            </div>
+        </div>
+
+        <!-- Diapositiva 23: Precs i Preguntes -->
+        <div class="slide bg-red" data-num="06">
+            <div class="slide-content">
+                <p class="eyebrow">Punt 06</p>
+                <h1>Precs i<br>Preguntes</h1>
+                <p class="sub">Obrim el torn de paraula per a tots els assistents</p>
+            </div>
+        </div>
+
+        <!-- Diapositiva 24: Tancament -->
+        <div class="slide bg-ink">
+            <div class="slide-content">
+                <h1 style="color: var(--red); font-size: clamp(4rem, 14vw, 12rem);">Gràcies</h1>
+                <p class="sub">per la vostra assistència i participació</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Barra inferior: peu, progrés i navegació -->
+    <div class="bottom-bar">
+        <div class="footer">Assemblea General · 25.09.2026</div>
+        <div class="dots" id="dots"></div>
+        <div class="nav">
+            <span id="counter"></span>
+            <button onclick="changeSlide(-1)" aria-label="Anterior">&larr;</button>
+            <button onclick="changeSlide(1)" aria-label="Següent">&rarr;</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll(".slide");
+        const counterElement = document.getElementById("counter");
+        const dotsElement = document.getElementById("dots");
+
+        slides.forEach((_, i) => {
+            const dot = document.createElement("button");
+            dot.setAttribute("aria-label", `Diapositiva ${i + 1}`);
+            dot.addEventListener("click", () => showSlide(i));
+            dotsElement.appendChild(dot);
+        });
+        const dots = dotsElement.querySelectorAll("button");
+
+        function showSlide(index) {
+            if (index >= slides.length) {
+                currentSlide = 0;
+            } else if (index < 0) {
+                currentSlide = slides.length - 1;
+            } else {
+                currentSlide = index;
+            }
+
+            slides.forEach(slide => slide.classList.remove("active"));
+            const slide = slides[currentSlide];
+            slide.classList.add("active");
+            fitSlide(slide);
+
+            // Colors de la barra inferior segons el fons
+            document.body.classList.toggle("on-dark", !slide.classList.contains("bg-paper"));
+            document.body.classList.toggle("on-red", slide.classList.contains("bg-red"));
+
+            dots.forEach((dot, i) => {
+                dot.classList.toggle("current", i === currentSlide);
+                dot.classList.toggle("done", i < currentSlide);
+            });
+            counterElement.textContent = `${String(currentSlide + 1).padStart(2, "0")} / ${slides.length}`;
+        }
+
+        // Si el contingut no cap a la pantalla, l'encongim fins que cap
+        function fitSlide(slide) {
+            const content = slide.querySelector(".slide-content");
+            content.style.transform = "";
+            const style = getComputedStyle(slide);
+            const availH = slide.clientHeight - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom);
+            const availW = slide.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+            const scale = Math.min(1, availH / content.scrollHeight, availW / content.scrollWidth);
+            if (scale < 0.99) {
+                content.style.transformOrigin = "left center";
+                content.style.transform = `scale(${scale})`;
+            }
+        }
+        window.addEventListener("resize", () => fitSlide(slides[currentSlide]));
+
+        function changeSlide(n) {
+            showSlide(currentSlide + n);
+        }
+
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "ArrowRight" || event.key === " " || event.key === "PageDown") {
+                event.preventDefault();
+                changeSlide(1);
+            } else if (event.key === "ArrowLeft" || event.key === "PageUp") {
+                changeSlide(-1);
+            }
+        });
+
+        // Lliscar amb el dit en mòbil o tauleta
+        let touchX = null;
+        document.addEventListener("touchstart", e => { touchX = e.touches[0].clientX; });
+        document.addEventListener("touchend", e => {
+            if (touchX === null) return;
+            const dx = e.changedTouches[0].clientX - touchX;
+            if (Math.abs(dx) > 50) changeSlide(dx < 0 ? 1 : -1);
+            touchX = null;
+        });
+
+        // Amplada de les barres segons el valor
+        document.querySelectorAll(".compare").forEach(chart => {
+            const max = parseFloat(chart.dataset.max);
+            chart.querySelectorAll(".bar:not(.pending)").forEach(bar => {
+                bar.style.setProperty("--w", (parseFloat(bar.dataset.v) / max * 78) + "%");
+                bar.title = bar.textContent.trim();
+            });
+        });
+        document.querySelectorAll(".ledger").forEach(ledger => {
+            const rows = ledger.querySelectorAll(".ledger-row");
+            const max = Math.max(...[...rows].map(r => parseFloat(r.dataset.v)));
+            rows.forEach(r => r.querySelector("i").style.setProperty("--w", (parseFloat(r.dataset.v) / max * 100) + "%"));
+        });
+
+        showSlide(currentSlide);
+    </script>
+
+</body>
+</html>
