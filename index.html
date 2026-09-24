@@ -462,13 +462,35 @@
         .mover-list.up strong { color: #1d7a3e; }
         .mover-list.down strong { color: var(--red-deep); }
 
+        .upgrade {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 14px;
+            margin-top: 3vh;
+        }
+        .upgrade div {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            padding: 8px 14px;
+            border: 1px solid rgba(243, 237, 226, 0.25);
+        }
+        .upgrade span {
+            font-family: 'DM Mono', ui-monospace, monospace;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--red);
+        }
+        .upgrade b { font-size: clamp(0.9rem, 1.5vw, 1.15rem); font-weight: 600; }
+
         .win-grid {
             display: grid;
             grid-template-columns: auto 1fr;
             gap: 5vw;
             align-items: center;
-            margin-top: 6vh;
-            padding-top: 4vh;
+            margin-top: 4vh;
+            padding-top: 3vh;
             border-top: 1px solid rgba(243, 237, 226, 0.2);
         }
         .win-main { display: flex; align-items: baseline; gap: 18px; }
@@ -1048,7 +1070,11 @@
         <div class="slide bg-ink">
             <div class="slide-content wide">
                 <p class="eyebrow" style="color: var(--red);">Conclusió · consum de begudes</p>
-                <p class="statement" style="max-width: 22ch;">Hem pagat poc més, però hem tingut <span style="color: var(--red);">molta més beguda</span></p>
+                <p class="statement" style="max-width: 24ch;">Hem pagat poc més, però hem tingut <span style="color: var(--red);">molta més beguda i de més qualitat</span></p>
+                <div class="upgrade">
+                    <div><span>Vodka</span><b>Smirnoff → Absolut</b></div>
+                    <div><span>Whisky</span><b>Cutty Sark, J&amp;B… → Ballantine's i Jack Daniel's</b></div>
+                </div>
                 <div class="win-grid">
                     <div class="win-main">
                         <strong>+21%</strong>
