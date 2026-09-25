@@ -484,6 +484,20 @@
         }
         .upgrade b { font-size: clamp(0.9rem, 1.5vw, 1.15rem); font-weight: 600; }
 
+        .new-members {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 5vh;
+        }
+        .new-members li {
+            border-top: 3px solid var(--red);
+            padding-top: 1.2vh;
+            font-size: clamp(1.2rem, 2.6vw, 2.2rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
         .win-grid {
             display: grid;
             grid-template-columns: auto 1fr;
@@ -560,6 +574,7 @@
 
         @media (max-width: 800px) {
             .win-grid { grid-template-columns: 1fr; }
+            .new-members { grid-template-columns: 1fr 1fr; }
             .win-list { grid-template-columns: 1fr 1fr; }
             .ledger, .meals, .two-charts, .movers { grid-template-columns: 1fr; gap: 3vh; }
             .kpis { grid-template-columns: 1fr 1fr; }
@@ -1073,7 +1088,7 @@
                 <p class="statement" style="max-width: 24ch;">Hem pagat poc més, però hem tingut <span style="color: var(--red);">molta més beguda i de més qualitat</span></p>
                 <div class="upgrade">
                     <div><span>Vodka</span><b>Smirnoff → Absolut</b></div>
-                    <div><span>Whisky</span><b>Cutty Sark, J&amp;B… → Ballantine's i Jack Daniel's</b></div>
+                    <div><span>Whisky</span><b>Cutty Sark, J&amp;B… → Ballantine's</b></div>
                 </div>
                 <div class="win-grid">
                     <div class="win-main">
@@ -1125,7 +1140,15 @@
         <div class="slide bg-ink">
             <div class="slide-content">
                 <p class="eyebrow" style="color: var(--red);">Benvinguts!</p>
-                <p class="statement">Aixina que benvinguts als nous integrants de la directiva <span style="color: var(--red);">26/27</span></p>
+                <p class="statement" style="font-size: clamp(1.8rem, 4.2vw, 3.6rem); max-width: 22ch;">Aixina que benvinguts als nous integrants de la directiva <span style="color: var(--red);">26/27</span></p>
+                <ul class="new-members">
+                    <li>Álvaro Maña</li>
+                    <li>Iago Sánchez</li>
+                    <li>Mey</li>
+                    <li>Raúl Gil</li>
+                    <li>Joan Arnau</li>
+                    <li>Julen Roig</li>
+                </ul>
             </div>
         </div>
 
